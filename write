@@ -1,0 +1,25 @@
+Przedstawię krótko zagadnienie aby nieco rozjaśnić tą metodę włamania.
+Słabym punktem każdej strony jest zawsze formularz lub okienka logowania.
+W prawidłowym zapytaniu SQL stringi powinny być zamknięte pomiędzy znakami apostrofu. W ten sposób interpreter odróżnia przypadkowe znaki od poleceń.
+Jeśli jednak użytkownik w formularzu wpisze znak apostrofu i tekst nie będzie podlegał walidacji może to doprowadzić do pojawienia się błędu czy nawet 
+usunięcia bazy danych. Można w ten sposób usuwać artykuły lub całe strony bez ingerencji wewnętrznej. Formularze bez walidacji to idealny materiał do włamania. 
+Właściwie mamy możliwość wykonania każdej czynności po stronie bazy danych.
+Kiedy użytkownik wpisuje login i hasło serwer wykonuje zapytanie SQL i sprawdza uwierzytelnienie z bazą danych.
+Co jednak jeśli nie znamy hasła a chcemy uzyskać dostęp do strony??
+Wprowadzamy kod : 'OR' 1'='1 ( to przykład, może być wiele mutacji tego kodu)
+Nieoczekiwany znak apostrofu na początku zamyka wcześniej stringi a dalej operator OR sprawdza kolejny warunek czy 1=1. Jeśli choć jeden warunek zostanie
+spełniony to zapytanie jest prawdziwe i zalogowani zostaniemy na konto admina. Mamy uprawnienia admina i możemy to co on. Jeszcze ładnych kilka lat temu 
+za pomocą tej metody można było uzyskać dostęp do słabo filtrowanych serwerów rządowych. Obecnie trzeba stosować wiele różnych mutacji kodu zależnie od okoliczności.
+Inne mutacje kodu...
+Jeśli znamy login można sprawić że jeden warunek będzie sprawdzany. Uzyskuje się to przez dodanie dwóch myślnikow: admin ') --
+Możemy skasować zawartość tabeli: ') delete from users --
+Lub całą bazę danych: ') drop database portal --
+To duży skrót możliwości zapytań SQL.
+Jeśli znamy dynamikę i logikę sql możemy wiele więcej ale to już na inny tekst wiedza. Za pomocą SQL można było uzyskać dostęp do kont bankowych, kiedyś ale to 
+już nie te czasy. Jednak aby podejrzeć zakupy na stronach użytkowników i dostęp do kart kredytowych itp. W wielu przypadkach możliwe. 
+Przykłady 4 stron. To strony gdzie programista nie zadbał o bezpieczeństwo dzięki temu mam pełny dostęp do panelu administratora bez poznawania hasła. 
+username : 1'or'1'='1
+password : 1'or'1'='1
+http://aark.us/admin_login.php
+http://more4you.ws/articles/editor/index.php
+http://www.arie.org.pe/simposio_arie_25/admin/login.php
